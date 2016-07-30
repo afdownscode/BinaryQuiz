@@ -11,8 +11,17 @@
 #include <time.h>    //time value for seed
 
 int main(){
-        time_t now;
-        now = time(NULL);
+        time_t now;     // a special type for the seed
+        now = time(NULL);   // returns the num of seconds since UNIX birth
+        srand((unsigned)now); // seed for the rand() function
+        // you could also use srand(now(NULL)); in one pass
+        rand();     // get it rocking
+        int count = 0;
+        int max_terms = 6;
+        while(count < 6){
+            printf("%d\n", rand() % 15 + 1);
+            count++;
+        }
         printf("Seconds = %d\n", now);
         return(0);
 }
