@@ -10,21 +10,33 @@
 #include <stdlib.h>  //for random generation
 #include <time.h>    //time value for seed
 
+int * getDistinctRands(int size, int arr[]);
+
+
 int main(){
+        int max_terms = 6;
+        int *nums;
+        nums = getDistinctRands(max_terms, nums);
+        for(int i = 0; i < max_terms; i++){
+            printf("%d\n", nums[i]);
+        }
+        return(0);
+}
+
+int * getDistinctRands(int size, int arr[]){
+        
         time_t now;     // a special type for the seed
         now = time(NULL);   // returns the num of seconds since UNIX birth
         srand((unsigned)now); // seed for the rand() function
         // you could also use srand(now(NULL)); in one pass
         rand();     // get it rocking
         int count = 0;
-        int max_terms = 6;
-        int nums[max_terms];
-        while(count < max_terms){
+        while(count < size){
             int candidate = rand() % 15 + 1;
-            nums[count] = candidate;
+            arr[count] = candidate;
             int proceed = 1;
             for(int i = 0; i < count; i++){
-                if(nums[i] == candidate){
+                if(arr[i] == candidate){
                     proceed = 0;
                 }    
             }
@@ -32,8 +44,7 @@ int main(){
                     continue;
             count++;
         }
-        for(int i = 0; i < max_terms; i++){
-            printf("%d\n", nums[i]);
-        }
-        return(0);
+        return arr;
 }
+
+        
