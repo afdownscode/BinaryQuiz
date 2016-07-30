@@ -20,8 +20,16 @@ int main(){
         int max_terms = 6;
         int nums[max_terms];
         while(count < max_terms){
-            nums[count] = rand() % 15 + 1;
-            //printf("%d\n", rand() % 15 + 1);
+            int candidate = rand() % 15 + 1;
+            nums[count] = candidate;
+            int proceed = 1;
+            for(int i = 0; i < count; i++){
+                if(nums[i] == candidate){
+                    proceed = 0;
+                }    
+            }
+            if(!proceed)
+                    continue;
             count++;
         }
         for(int i = 0; i < max_terms; i++){
