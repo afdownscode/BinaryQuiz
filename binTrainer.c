@@ -18,10 +18,14 @@ int main(){
         rand();     // get it rocking
         int count = 0;
         int max_terms = 6;
-        while(count < 6){
-            printf("%d\n", rand() % 15 + 1);
+        int nums[max_terms];
+        while(count < max_terms){
+            nums[count] = rand() % 15 + 1;
+            //printf("%d\n", rand() % 15 + 1);
             count++;
         }
-        printf("Seconds = %d\n", now);
+        for(int i = 0; i < max_terms; i++){
+            printf("%d\n", nums[i]);
+        }
         return(0);
 }
