@@ -28,7 +28,9 @@ int main(){
         for(int i = 0; i < num_select; i++){
             printf("adders %d\t\t%d\n",i, adders[i]);
         } 
-        int sum = choices[adders[0]] + choices[adders[1]] + choices[adders[2]]; 
+        int sum = choices[adders[0]] + 
+                  choices[adders[1]] + 
+                  choices[adders[2]]; 
         printf("The sum of the indexes = %d\n", sum);
         return(0);
 }
