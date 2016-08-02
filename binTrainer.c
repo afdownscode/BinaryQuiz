@@ -11,18 +11,20 @@
 #include <time.h>    //time value for seed
 
 
-void displayBinary(int num_digits, int num_target);
+void displayBinary(int n, int bit_arr[], int num_target);
 void createDistinctRands(int size, int arr[], int range, int zeroflag);
 
 
 int main(){
-        int num_choices = 9; // the number of random ints
+        const int bin_digits = 4;  // the number on binary digits
+        int bin_array[bin_digits]; // to hold the binary digits
+        const int num_choices = 9; // the number of random ints
         int choices[num_choices];
         createDistinctRands(num_choices, choices, 15, 0);
         printf("The randoms:\n");
         for(int i = 0; i < num_choices; i++){
             printf("Choices %d\t",i);
-            displayBinary(4,choices[i]);
+            displayBinary(bin_digits, bin_array, choices[i]);
             printf("\t%d", choices[i]);
             printf("\n");
         }
@@ -72,18 +74,20 @@ void createDistinctRands(int size, int arr[], int range, int zeroflag){
 }
 
         
-void displayBinary(int num_digits, int num_target){
+void displayBinary(int n, int bit_arr[], int num_target){
         // num_digits is the bits of binary to display
         // num_target is number to be converted
-        num_digits = 4;
-        int i = num_digits - 1;
-        int bin[4] = {0};
+        // need to zero out the bin array
+        for(int i = 0; i < n; i++){
+                bit_arr[i] = 0;
+        }
+        int i = n - 1;
         while(num_target > 0){
-            bin[i] = num_target%2;
+            bit_arr[i] = num_target%2;
             num_target /= 2;
             i--;
         }
-        for(i = 0; i < num_digits; i++){
-            printf("%d", bin[i]);
+        for(i = 0; i < n; i++){
+            printf("%d", bit_arr[i]);
         }
 }
