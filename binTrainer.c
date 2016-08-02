@@ -19,26 +19,40 @@ int main(){
         const int bin_digits = 4;  // the number on binary digits
         int bin_array[bin_digits]; // to hold the binary digits
         const int num_choices = 9; // the number of random ints
-        int choices[num_choices];
+        int choices[num_choices];  // to hold the random numbers
         createDistinctRands(num_choices, choices, 15, 0);
-        printf("The randoms:\n");
+        printf("The Binary Quiz\n");
+        printf("Pick 3 numbers to find given sum...\n");
         for(int i = 0; i < num_choices; i++){
-            printf("Choices %d\t",i);
+            printf("Choice %d\t",i);
             displayBinary(bin_digits, bin_array, choices[i]);
-            printf("\t%d", choices[i]);
             printf("\n");
         }
         int num_select = 3; // the number of items to sum
         int adders[num_select];  // to hold the indexes to add for sum
         createDistinctRands(num_select, adders, num_choices, 1);
-        printf("The indexes:\n");
-        for(int i = 0; i < num_select; i++){
-            printf("adders %d\t\t%d\n",i, adders[i]);
-        } 
+        //printf("The indexes:\n");
+        //for(int i = 0; i < num_select; i++){
+        //    printf("adders %d\t\t%d\n",i, adders[i]);
+        //} 
         int sum = choices[adders[0]] + 
                   choices[adders[1]] + 
                   choices[adders[2]]; 
-        printf("The sum of the indexes = %d\n", sum);
+        printf("The sum to find = %d\n", sum);
+        int num_picks = 3;
+        int picks[num_picks];
+        int pick_sum = 0;
+        for(int i = 0; i < num_picks; i++){
+            printf("Select Choice %d: ", i + 1);
+            scanf("%d", picks + i);
+            pick_sum += choices[picks[i]];
+        }
+        if(sum == pick_sum)
+                printf("Winner! Winner! Chicken Dinner!!\n");
+        else
+                printf("Thou cannot addeth thy binary...\n");
+        getchar();
+ 
         return(0);
 }
 
