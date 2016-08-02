@@ -10,6 +10,8 @@
 #include <stdlib.h>  //for random generation
 #include <time.h>    //time value for seed
 
+
+void displayBinary(int num_digits, int num_target);
 void createDistinctRands(int size, int arr[], int range, int zeroflag);
 
 
@@ -19,7 +21,10 @@ int main(){
         createDistinctRands(num_choices, choices, 15, 0);
         printf("The randoms:\n");
         for(int i = 0; i < num_choices; i++){
-            printf("Choices %d\t%d\n",i, choices[i]);
+            printf("Choices %d\t",i);
+            displayBinary(4,choices[i]);
+            printf("\t%d", choices[i]);
+            printf("\n");
         }
         int num_select = 3; // the number of items to sum
         int adders[num_select];  // to hold the indexes to add for sum
@@ -67,3 +72,18 @@ void createDistinctRands(int size, int arr[], int range, int zeroflag){
 }
 
         
+void displayBinary(int num_digits, int num_target){
+        // num_digits is the bits of binary to display
+        // num_target is number to be converted
+        num_digits = 4;
+        int i = num_digits - 1;
+        int bin[4] = {0};
+        while(num_target > 0){
+            bin[i] = num_target%2;
+            num_target /= 2;
+            i--;
+        }
+        for(i = 0; i < num_digits; i++){
+            printf("%d", bin[i]);
+        }
+}
