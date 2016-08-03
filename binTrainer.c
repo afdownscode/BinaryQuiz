@@ -64,7 +64,7 @@ int main(){
                 correct = 1;
         }
         else{
-                printf("Thou cannot addeth thy binary...\n");
+                printf("You need some more practice...\n");
                 correct = 0;
         }
         
