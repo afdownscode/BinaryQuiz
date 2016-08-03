@@ -16,11 +16,13 @@ void createDistinctRands(int size, int arr[], int range, int zeroflag);
 
 
 int main(){
-        const int bin_digits = 4;  // the number on binary digits
-        int bin_array[bin_digits]; // to hold the binary digits
-        const int num_choices = 9; // the number of random ints
-        int choices[num_choices];  // to hold the random numbers
-        createDistinctRands(num_choices, choices, 15, 0);
+        const int bin_digits = 4;   // the number on binary digits
+        int bin_array[bin_digits];  // to hold the binary digits
+        const int num_choices = 9;  // the number of random ints
+        int choices[num_choices];   // to hold the random numbers
+        const int range = 15;       // the range of numbers for binary conv
+        
+        createDistinctRands(num_choices, choices, range, 0);
         printf("The Binary Quiz\n");
         printf("Pick 3 numbers to find given sum...\n");
         for(int i = 0; i < num_choices; i++){
@@ -42,15 +44,24 @@ int main(){
         int num_picks = 3;
         int picks[num_picks];
         int pick_sum = 0;
+
+        double elapsed_time;
+        time_t start;
+        time(&start); 
         for(int i = 0; i < num_picks; i++){
             printf("Select Choice %d: ", i + 1);
             scanf("%d", picks + i);
             pick_sum += choices[picks[i]];
         }
+        time_t end;
+        time(&end);
         if(sum == pick_sum)
                 printf("Winner! Winner! Chicken Dinner!!\n");
         else
                 printf("Thou cannot addeth thy binary...\n");
+        
+        elapsed_time = difftime(end, start);
+        printf("It took %f seconds\n", elapsed_time);
         getchar();
  
         return(0);
