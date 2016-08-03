@@ -37,6 +37,7 @@ void gameMainLoop(int rounds, double *tot_score){
         
         int current_round = 1;
         while(current_round <= rounds){
+            printf("Round %d\n", current_round);
             *tot_score += gameRound();
             current_round++;
         }
@@ -118,7 +119,7 @@ double calcScore(double t, int answer){
 double gameRound(){
         const int bin_digits = 4;   // the number on binary digits
         int bin_array[bin_digits];  // to hold the binary digits
-        const int num_choices = 9;  // the number of random ints
+        const int num_choices = 6;  // the number of random ints
         int choices[num_choices];   // to hold the random numbers
         const int range = 15;       // the range of numbers for binary conv
         const int nozeros = 0;
@@ -166,7 +167,7 @@ double gameRound(){
         elapsed_time = difftime(end, start);
         printf("It took %04.1f seconds\n", elapsed_time);
         double round_score = calcScore(elapsed_time, correct);
-        printf("Your score is %04.1f\n", round_score);
+        printf("Your score is %04.1f\n\n", round_score);
 
         return round_score;
 }
