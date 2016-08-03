@@ -14,6 +14,7 @@
 void displayBinary(int n, int bit_arr[], int num_target);
 void createDistinctRands(int size, int arr[], int range, int zeroflag);
 double calcScore(double t, int answer);
+void gameRound();
 
 
 int main(){
@@ -78,7 +79,7 @@ int main(){
 
 void createDistinctRands(int size, int arr[], int range, int zeroflag){
         // this function populates an array with random integers
-        // range is random range... zeroflag is if 0 will be included
+        // range is random range... zeroflag false for no zero in output 
 
         time_t now;     // a special type for the seed
         now = time(NULL);   // returns the num of seconds since UNIX birth
@@ -147,4 +148,58 @@ double calcScore(double t, int answer){
                 score = 0.0;
 
         return score;
+}
+
+void gameRound(){
+        const int bin_digits = 4;   // the number on binary digits
+        int bin_array[bin_digits];  // to hold the binary digits
+        const int num_choices = 9;  // the number of random ints
+        int choices[num_choices];   // to hold the random numbers
+        const int range = 15;       // the range of numbers for binary conv
+        const int nozeros = 0;
+        const int withzeros = 1;
+
+
+        createDistinctRands(num_choices, choices, range, nozeros);
+        printf("The Binary Quiz\n");
+        printf("Pick 3 numbers to find given sum...\n");
+        for(int i = 0; i < num_choices; i++){
+            printf("Choice %d\t",i);
+            displayBinary(bin_digits, bin_array, choices[i]);
+            printf("\n");
+        }
+        int num_select = 3; // the number of items to sum
+        int adders[num_select];  // to hold the indexes to add for sum
+        createDistinctRands(num_select, adders, num_choices, withzeros);
+        int sum = choices[adders[0]] + 
+                  choices[adders[1]] + 
+                  choices[adders[2]]; 
+        printf("The sum to find = %d\n", sum);
+        int num_picks = 3;
+        int picks[num_picks];
+        int pick_sum = 0;
+        int correct;
+
+        double elapsed_time;
+        time_t start;
+        time(&start); 
+        for(int i = 0; i < num_picks; i++){
+            printf("Select Choice %d: ", i + 1);
+            scanf("%d", picks + i);
+            pick_sum += choices[picks[i]];
+        }
+        time_t end;
+        time(&end);
+        if(sum == pick_sum){
+                printf("Winner! Winner! Chicken Dinner!!\n");
+                correct = 1;
+        }
+        else{
+                printf("You need some more practice...\n");
+                correct = 0;
+        }
+        
+        elapsed_time = difftime(end, start);
+        printf("It took %04.1f seconds\n", elapsed_time);
+        printf("Your score is %04.1f\n", calcScore(elapsed_time, correct));
 }
