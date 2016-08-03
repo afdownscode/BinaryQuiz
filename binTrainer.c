@@ -13,6 +13,7 @@
 
 void displayBinary(int n, int bit_arr[], int num_target);
 void createDistinctRands(int size, int arr[], int range, int zeroflag);
+double calcScore(double t, int answer);
 
 
 int main(){
@@ -21,8 +22,10 @@ int main(){
         const int num_choices = 9;  // the number of random ints
         int choices[num_choices];   // to hold the random numbers
         const int range = 15;       // the range of numbers for binary conv
+        const int nozeros = 0;
+        const int withzeros = 1;
         
-        createDistinctRands(num_choices, choices, range, 0);
+        createDistinctRands(num_choices, choices, range, nozeros);
         printf("The Binary Quiz\n");
         printf("Pick 3 numbers to find given sum...\n");
         for(int i = 0; i < num_choices; i++){
@@ -32,7 +35,7 @@ int main(){
         }
         int num_select = 3; // the number of items to sum
         int adders[num_select];  // to hold the indexes to add for sum
-        createDistinctRands(num_select, adders, num_choices, 1);
+        createDistinctRands(num_select, adders, num_choices, withzeros);
         //printf("The indexes:\n");
         //for(int i = 0; i < num_select; i++){
         //    printf("adders %d\t\t%d\n",i, adders[i]);
@@ -44,6 +47,7 @@ int main(){
         int num_picks = 3;
         int picks[num_picks];
         int pick_sum = 0;
+        int correct;
 
         double elapsed_time;
         time_t start;
@@ -55,13 +59,18 @@ int main(){
         }
         time_t end;
         time(&end);
-        if(sum == pick_sum)
+        if(sum == pick_sum){
                 printf("Winner! Winner! Chicken Dinner!!\n");
-        else
+                correct = 1;
+        }
+        else{
                 printf("Thou cannot addeth thy binary...\n");
+                correct = 0;
+        }
         
         elapsed_time = difftime(end, start);
-        printf("It took %f seconds\n", elapsed_time);
+        printf("It took %04.1f seconds\n", elapsed_time);
+        printf("Your score is %04.1f\n", calcScore(elapsed_time, correct));
         getchar();
  
         return(0);
@@ -115,4 +124,27 @@ void displayBinary(int n, int bit_arr[], int num_target){
         for(i = 0; i < n; i++){
             printf("%d", bit_arr[i]);
         }
+}
+
+double calcScore(double t, int answer){
+        double score;
+        if(!answer)
+                return 0;
+
+        if(t < 5){
+            score = (60 - t) * 1.5;
+        }
+        else if(t < 15){
+            score = (60 - t) * 1.25;
+        }
+        else if(t < 30){
+            score = (60 - t) * 1.0;
+        }
+        else if(t < 60){
+            score = (60 - t) * .75;
+        }
+        else
+                score = 0.0;
+
+        return score;
 }
