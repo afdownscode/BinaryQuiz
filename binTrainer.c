@@ -2,8 +2,8 @@
  * a program to quiz on binary numbers
  * generate 9 numbers between 1 - 15
  * select 3 of those and sum
- * display all 9 with target of sum
- * select the correct 3 to match sum
+ * display all 9 with target sum
+ * select 3 to match sum
  */
 
 #include <stdio.h>
@@ -14,18 +14,32 @@
 void displayBinary(int n, int bit_arr[], int num_target);
 void createDistinctRands(int size, int arr[], int range, int zeroflag);
 double calcScore(double t, int answer);
-void gameRound();
+double gameRound();
+void gameMainLoop(int rounds, double *tot_score);
 
 
 int main(){
+        const int num_rounds = 3;
+        double total_score = 0.0;
         
         printf("The Binary Quiz\n");
 
-        gameRound();
+        gameMainLoop(num_rounds, &total_score);
+
+        printf("\nTotal Score = %05.2f\n", total_score);
 
         getchar();
  
         return(0);
+}
+
+void gameMainLoop(int rounds, double *tot_score){
+        
+        int current_round = 1;
+        while(current_round <= rounds){
+            *tot_score += gameRound();
+            current_round++;
+        }
 }
 
 void createDistinctRands(int size, int arr[], int range, int zeroflag){
@@ -83,17 +97,17 @@ double calcScore(double t, int answer){
         if(!answer)
                 return 0;
 
-        if(t < 5){
-            score = (60 - t) * 1.5;
-        }
-        else if(t < 15){
-            score = (60 - t) * 1.25;
+        if(t < 15){
+            score = (60 - t) * 2.0;
         }
         else if(t < 30){
-            score = (60 - t) * 1.0;
+            score = (60 - t) * 1.50;
+        }
+        else if(t < 45){
+            score = (60 - t) * 1.25;
         }
         else if(t < 60){
-            score = (60 - t) * .75;
+            score = (60 - t) * 1.0;
         }
         else
                 score = 0.0;
@@ -101,7 +115,7 @@ double calcScore(double t, int answer){
         return score;
 }
 
-void gameRound(){
+double gameRound(){
         const int bin_digits = 4;   // the number on binary digits
         int bin_array[bin_digits];  // to hold the binary digits
         const int num_choices = 9;  // the number of random ints
@@ -112,7 +126,7 @@ void gameRound(){
 
 
         createDistinctRands(num_choices, choices, range, nozeros);
-        printf("Pick 3 numbers to find given sum...\n");
+        printf("Pick 3 numbers that add up to the sum...\n");
         for(int i = 0; i < num_choices; i++){
             printf("Choice %d\t",i);
             displayBinary(bin_digits, bin_array, choices[i]);
@@ -151,5 +165,8 @@ void gameRound(){
         
         elapsed_time = difftime(end, start);
         printf("It took %04.1f seconds\n", elapsed_time);
-        printf("Your score is %04.1f\n", calcScore(elapsed_time, correct));
+        double round_score = calcScore(elapsed_time, correct);
+        printf("Your score is %04.1f\n", round_score);
+
+        return round_score;
 }
